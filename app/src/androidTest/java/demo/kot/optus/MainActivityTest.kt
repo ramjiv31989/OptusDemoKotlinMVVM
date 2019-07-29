@@ -1,6 +1,5 @@
 package demo.kot.optus
 
-import android.arch.lifecycle.MutableLiveData
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -32,7 +31,7 @@ class MainActivityTest {
     @Test
     fun recyclerViewDisplay() {
         onView(withId(R.id.recyclerView))
-            .check(matches(not(isDisplayed())));
+            .check(matches(not(isDisplayed())))
     }
 
     @Test
