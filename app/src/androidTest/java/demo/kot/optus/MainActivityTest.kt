@@ -21,11 +21,10 @@ import retrofit2.Call
 import retrofit2.Callback
 
 class MainActivityTest {
-    val liveUserInfoResponse: MutableLiveData<List<MyUserProfile>> = MutableLiveData()
-    val geo = Geo(1.0, 1.0)
-    val address = Address("", "", "", "", geo)
-    val company = Company("", "", "")
-    val myUserInfo =
+    private val geo = Geo(1.0, 1.0)
+    private val address = Address("", "", "", "", geo)
+    private val company = Company("", "", "")
+    private val myUserInfo =
         MyUserInfo(1, "Leanne Graham", "", "Sincere@april.biz", address, "1-770-736-8031 x56442", "", company)
     @get:Rule
     var activityRule: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java)
@@ -99,7 +98,10 @@ class MainActivityTest {
             override fun onFailure(call: Call<List<MyUserProfile>>, t: Throwable?) {
             }
 
-            override fun onResponse(call: Call<List<MyUserProfile>>, response: retrofit2.Response<List<MyUserProfile>>) {
+            override fun onResponse(
+                call: Call<List<MyUserProfile>>,
+                response: retrofit2.Response<List<MyUserProfile>>
+            ) {
 
                 assertEquals(true, response.isSuccessful())
 
