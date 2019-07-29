@@ -11,21 +11,22 @@ import demo.kot.optus.model.userinfo.Address
 import demo.kot.optus.model.userinfo.Company
 import demo.kot.optus.model.userinfo.Geo
 import demo.kot.optus.model.userinfo.MyUserInfo
+import demo.kot.optus.model.userinfo.userprofile.MyUserProfile
 import org.hamcrest.CoreMatchers.not
-import org.junit.Assert
 import org.junit.Rule
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
+import retrofit2.Call
+import retrofit2.Callback
 
 class MainActivityTest {
-    val liveUserInfoResponse: MutableLiveData<List<MyUserInfo>> = MutableLiveData()
+    val liveUserInfoResponse: MutableLiveData<List<MyUserProfile>> = MutableLiveData()
     val geo = Geo(1.0, 1.0)
     val address = Address("", "", "", "", geo)
     val company = Company("", "", "")
     val myUserInfo =
         MyUserInfo(1, "Leanne Graham", "", "Sincere@april.biz", address, "1-770-736-8031 x56442", "", company)
-
     @get:Rule
     var activityRule: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java)
 
@@ -89,6 +90,38 @@ class MainActivityTest {
         val retrofitCall = RetrofitService.create().getUserProfile()
         val result = retrofitCall.execute()
         assertNotEquals("Some datas", result.body()!!)
+    }
+
+    @Test
+    fun testRetrofitSuccessUserProfileCall() {
+        val retrofitCall = RetrofitService.create().getUserProfile()
+        retrofitCall.enqueue(object : Callback<List<MyUserProfile>> {
+            override fun onFailure(call: Call<List<MyUserProfile>>, t: Throwable?) {
+            }
+
+            override fun onResponse(call: Call<List<MyUserProfile>>, response: retrofit2.Response<List<MyUserProfile>>) {
+
+                assertEquals(true, response.isSuccessful())
+
+            }
+
+        })
+    }
+
+    @Test
+    fun testRetrofitSuccessUserInfoCall() {
+        val retrofitCall = RetrofitService.create().getUserInfo()
+        retrofitCall.enqueue(object : Callback<List<MyUserInfo>> {
+            override fun onFailure(call: Call<List<MyUserInfo>>, t: Throwable?) {
+            }
+
+            override fun onResponse(call: Call<List<MyUserInfo>>, response: retrofit2.Response<List<MyUserInfo>>) {
+
+                assertEquals(true, response.isSuccessful())
+
+            }
+
+        })
     }
 
 
